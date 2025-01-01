@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
     <link rel="stylesheet" href="./recursos/css/estilos.css">
+
     <script src="https://kit.fontawesome.com/f7fb471b65.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
 
@@ -26,8 +27,8 @@
                 <img class="anclaLogo" src="./recursos/img/logo.png" alt="">
             </a>
             <ul class="listaNav">
-                <li class="listaItem"><a class="linkNav iniciarSesion" href="./pages/registrarse.html">Registrarse</a></li>
-                <li class="listaItem"><a class="linkNav iniciarSesion" href="./pages/iniciosesion.html">Iniciar Sesión</a></li>
+                <li class="listaItem"><a class="linkNav iniciarSesion" href="./index.php?action=registrarse">Registrarse</a></li>
+                <li class="listaItem"><a class="linkNav iniciarSesion" href="./index.php?action=iniciosesion">Iniciar Sesión</a></li>
             </ul>
         </nav>
     </header>
