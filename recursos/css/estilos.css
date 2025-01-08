@@ -597,7 +597,7 @@ body {
 
         /*seccion de registrarse.html*/
         .seccionRegistrarse {
-            
+
             background-color: rgb(42, 42, 42);
             opacity: 0.008;
             width: 100%;
@@ -749,4 +749,9 @@ hr {
     width: 80%;
     margin: 0 auto;
     margin-top: 40px;
+}
+
+.error {
+    font-size: larger;
+    color: red;
 }

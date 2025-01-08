@@ -1,3 +1,9 @@
+<?php
+require_once './controller/Webontroller.php';
+
+$controller = new WebController();
+?>
+
 <br><br>
 <section data-aos="zoom-in" data-aos-duration="1000" class="seccionRegistrarse">
     <form action="./index.php?action=register" method="post">
@@ -14,9 +20,10 @@
 
 
 
+        <?php $controller->mostrarerrores() ?>
 
         <div class="div_button">
-            <input  name="submitregister"  class="boton" type="submit" value="Registrarse">
+            <input name="submitregister" class="boton" type="submit" value="Registrarse">
         </div>
 
 

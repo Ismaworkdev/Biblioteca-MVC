@@ -6,7 +6,8 @@ class Router
         // Verificar si hay un parámetro "action" en la URL
         if (isset($_GET['action'])) {
             $action = $_GET['action'];
-
+            require_once './controller/Webontroller.php';
+            $controller = new WebController();
             switch ($action) {
                 case 'registrarse':
                     include './vista/registrarse.php';
@@ -18,8 +19,14 @@ class Router
                 case 'index':
                     include './vista/sectionindex.php';
                     break;
+                case 'login':
+                    $controller->login();
+                    break;
+                case 'register':
+                    $controller->register();
+                    break;
                 default:
-                    echo "<h1>Página no encontrada</h1>";
+                    include './vista/notfound.php';
                     break;
             }
         } else {
