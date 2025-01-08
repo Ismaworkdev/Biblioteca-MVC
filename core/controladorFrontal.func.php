@@ -15,7 +15,9 @@ class Router
                 case 'iniciosesion':
                     include './vista/iniciosesion.php';
                     break;
-
+                case 'index':
+                    include './vista/sectionindex.php';
+                    break;
                 default:
                     echo "<h1>Página no encontrada</h1>";
                     break;

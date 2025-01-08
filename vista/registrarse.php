@@ -1,6 +1,6 @@
 <br><br>
 <section data-aos="zoom-in" data-aos-duration="1000" class="seccionRegistrarse">
-    <form action="" method="post">
+    <form action="./index.php?action=register" method="post">
         <h2 class="tituloRegistrarse">Registro</h2>
         <div>
             <input type="text" placeholder="Nombre" id="nombre" name="nombre">
@@ -16,7 +16,7 @@
 
 
         <div class="div_button">
-            <input class="boton" type="submit" value="Registrarse">
+            <input  name="submitregister"  class="boton" type="submit" value="Registrarse">
         </div>
 
 

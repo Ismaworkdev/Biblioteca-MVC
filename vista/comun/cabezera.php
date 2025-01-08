@@ -23,7 +23,7 @@
 <body>
     <header class="header">
         <nav class="navegacion">
-            <a class="anclaLogo" href="./index.html">
+            <a class="anclaLogo" href="./index.php?action=index">
                 <img class="anclaLogo" src="./recursos/img/logo.png" alt="">
             </a>
             <ul class="listaNav">

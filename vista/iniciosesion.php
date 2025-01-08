@@ -1,6 +1,6 @@
 <br><br>
 <section data-aos="zoom-in" data-aos-duration="1000" class="seccionRegistrarse">
-    <form action="" method="post">
+    <form action="./index.php?action=login" method="POST">
         <h2 class="tituloRegistrarse">Iniciar Sesión</h2>
 
         <div>
