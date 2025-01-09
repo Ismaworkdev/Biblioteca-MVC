@@ -23,7 +23,7 @@ class Conexion
                 $this->password
             );
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            print "conexion exitosa";
+
             return $this->conexion;
         } catch (PDOException $e) {
             $this->mensajeerror = $e->getMessage();

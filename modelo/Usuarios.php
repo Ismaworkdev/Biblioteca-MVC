@@ -7,7 +7,9 @@ class Usuarios
     private $ape2;
     private $rol;
     private $nombre;
-    function __construct($id, $ape1, $ape2, $rol, $nombre)
+
+
+    function __construct($nombre, $id = null, $ape1 = null, $ape2 = null, $rol = null)
     {
         $this->id = $id;
         $this->ape1 = $ape1;
@@ -15,6 +17,7 @@ class Usuarios
         $this->rol = $rol;
         $this->nombre = $nombre;
     }
+
     /**
      * Get the value of id
      */

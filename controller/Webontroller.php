@@ -1,14 +1,19 @@
 <?php
 $vacio = null;
 $incorrecto = null;
+$usuexiste = null;
+
 require_once './modelo/Usuariosmodel.php';
+
 class WebController
 {
 
 
     function login()
     {
+
         global $vacio;
+        global $incorrecto;
         if ($_SERVER['REQUEST_METHOD'] = 'POST') {
             if ($_POST['submitlogin']) {
                 $usuario = $_POST['usuariologin'];
@@ -16,10 +21,11 @@ class WebController
                 if (!empty($usuario)) {
 
                     $vacio = false;
+
+                    $model = new UsuariosModel();
+                    $incorrecto =  $model->verificarusuario($usuario);
                 } else {
                     $vacio = true;
-                    $model = new UsuariosModel();
-                    echo $model->verificarConexion();
                 }
             }
         }
@@ -29,6 +35,7 @@ class WebController
     function register()
     {
         global $vacio;
+        global $usuexiste;
         if ($_SERVER['REQUEST_METHOD'] = 'POST') {
             if ($_POST['submitregister']) {
                 $nombre = $_POST['nombre'];
@@ -36,6 +43,8 @@ class WebController
                 $ape2 = $_POST['apellido2'];
                 if (!empty($nombre) && !empty($ape1) && !empty($ape2)) {
                     $vacio = false;
+                    $model = new UsuariosModel();
+                    $usuexiste =  $model->verificarregistrado($nombre, $ape1, $ape2);
                 } else {
                     $vacio = true;
                 }
@@ -52,7 +61,7 @@ class WebController
             if ($incorrecto == false) {
                 print "<span class='error'>  </span>";
             } else {
-                print "<span class='error'>  Usuario o contraseña incorrectas . </span>";
+                print "<span class='error'>  Usuario inexistente . </span>";
             }
         }
 
@@ -61,6 +70,18 @@ class WebController
                 print "<span class='error'> Rellene todos lo campos .</span>";
             } else {
                 print "<span class='error'></span>";
+            }
+        }
+    }
+
+    function alertacambio()
+    {
+        global $usuexiste;
+        if ($usuexiste !== null) {
+            if ($usuexiste == false) {
+                print ' <script>  </script> ';
+            } else {
+                print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';
             }
         }
     }
