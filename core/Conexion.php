@@ -1,19 +1,19 @@
 <?php
-abstract class Conexion
+class Conexion
 {
 
     private $servername = "localhost:3306";
     private $database = "Biblioteca";
     private $username = "root";
     private $password = "";
-    private $registros = array();
+
     private $conexion;
     private $mensajeerror = "";
 
 
     # Conectar a la base de datos
 
-    public function getConexion()
+    public  function getConexion()
     {
 
         try {
@@ -23,6 +23,7 @@ abstract class Conexion
                 $this->password
             );
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            print "conexion exitosa";
             return $this->conexion;
         } catch (PDOException $e) {
             $this->mensajeerror = $e->getMessage();
@@ -41,20 +42,5 @@ abstract class Conexion
     public function getMensajeError()
     {
         return $this->mensajeerror;
-    }
-
-    # Traer resultados de una consulta sin parámetros en un Array
-
-    public function getAllreg($tabla)
-    {
-        try {
-            $sql = "select * from $tabla";
-            $statement = $this->conexion->query($sql);
-            $this->registros = $statement->fetchAll();
-            $statement = null;
-            return $this->registros;
-        } catch (PDOException $e) {
-            $this->mensajeerror = $e->getMessage();
-        }
     }
 }

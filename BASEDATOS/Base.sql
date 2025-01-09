@@ -27,11 +27,11 @@ CONSTRAINT FOREIGN KEY (id_user) REFERENCES USUARIOS(id_user),
 
 -- Insert 5 users
 INSERT INTO USUARIOS (id_user, nombre, ape1, ape2, rol) VALUES
-('1', 'Juan', 'Pérez', 'García', 'Estudiante'),
-('2', 'María', 'López', 'Martínez', 'Profesor'),
-('3', 'Carlos', 'Sánchez', 'Rodríguez', 'Estudiante'),
-('4', 'Ana', 'González', 'Hernández', 'Bibliotecario'),
-('5', 'Luis', 'Martín', 'Díaz', 'Estudiante');
+('1', 'admin', 'admin', 'admin', '0'),
+('2', 'María', 'López', 'Martínez', '1'),
+('3', 'Carlos', 'Sánchez', 'Rodríguez', '1'),
+('4', 'Ana', 'González', 'Hernández', '1'),
+('5', 'Luis', 'Martín', 'Díaz', '1');
 
 -- Insert 5 books
 INSERT INTO LIBROS (ISBN, titulo, autor) VALUES

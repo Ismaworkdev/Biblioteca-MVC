@@ -1,7 +1,7 @@
 <?php
 $vacio = null;
 $incorrecto = null;
-
+require_once './modelo/Usuariosmodel.php';
 class WebController
 {
 
@@ -18,6 +18,8 @@ class WebController
                     $vacio = false;
                 } else {
                     $vacio = true;
+                    $model = new UsuariosModel();
+                    echo $model->verificarConexion();
                 }
             }
         }
