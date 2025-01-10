@@ -1,7 +1,7 @@
 <?php
 require_once './core/Conexion.php';
 require_once './modelo/Usuarios.php';
-
+$execute = null;
 class UsuariosModel
 {
     private $db;
@@ -38,11 +38,13 @@ class UsuariosModel
 
     public  function verificarregistrado($nombre, $ape1, $ape2)
     {
+        global $execute;
         if ($this->db) {
-            if (!$this->verificarusuario($nombre)) {
 
+            if ($this->verificarusuario($nombre)) {
 
                 try {
+
                     $sql =  "SELECT COALESCE(MAX(id_user), 0) + 1 AS new_id FROM usuarios";
                     $stmt = $this->db->prepare($sql);
                     $stmt->execute();
@@ -58,7 +60,7 @@ class UsuariosModel
 
 
                     $stmt = $this->db->prepare("INSERT INTO USUARIOS (id_user, nombre, ape1, ape2, rol) VALUES
-                (':iduser', ':nom', ':ap1', ':ap2', ':roll')");
+                (:iduser, :nom, :ap1, :ap2, :roll)");
                     $stmt->bindParam(':iduser', $new_Id);
                     $stmt->bindParam(':nom', $nombree);
                     $stmt->bindParam(':ap1', $Ape1);
@@ -66,10 +68,12 @@ class UsuariosModel
                     $stmt->bindParam(':roll', $Rol);
                     $stmt->execute();
                     return true;
+                    $execute = true;
                 } catch (\Throwable $th) {
+                    return false;
                 }
             } else {
-                return false;
+                $execute = false;
             }
         }
     }

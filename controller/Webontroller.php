@@ -57,6 +57,7 @@ class WebController
     {
         global $vacio;
         global $incorrecto;
+        global $execute;
         if ($incorrecto !== null) {
             if ($incorrecto == false) {
                 print "<span class='error'>  </span>";
@@ -68,6 +69,14 @@ class WebController
         if ($vacio !== null) {
             if ($vacio) {
                 print "<span class='error'> Rellene todos lo campos .</span>";
+            } else {
+                print "<span class='error'></span>";
+            }
+        }
+
+        if ($execute !== null) {
+            if (!$execute) {
+                print "<span class='error'> Nombre existente registrate con otro nombre .</span>";
             } else {
                 print "<span class='error'></span>";
             }
