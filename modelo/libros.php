@@ -5,13 +5,17 @@ class Libros
     private $ISBN;
     private $titulo;
     private $autor;
+    private $descripcion;
 
-    function __construct($ISBN, $titulo, $autor)
+    function __construct($ISBN, $titulo, $autor, $descripcion)
     {
         $this->ISBN = $ISBN;
         $this->titulo = $titulo;
         $this->autor = $autor;
+        $this->descripcion = $descripcion;
     }
+
+
 
 
 
@@ -65,6 +69,24 @@ class Libros
     public function setAutor($autor): self
     {
         $this->autor = $autor;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of descripcion
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     */
+    public function setDescripcion($descripcion): self
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }

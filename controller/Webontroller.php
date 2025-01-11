@@ -76,7 +76,7 @@ class WebController
 
         if ($execute !== null) {
             if (!$execute) {
-                print "<span class='error'> Nombre existente registrate con otro nombre .</span>";
+                print "<span class='error'> Usuario existente prueba otro nombre  .</span>";
             } else {
                 print "<span class='error'></span>";
             }

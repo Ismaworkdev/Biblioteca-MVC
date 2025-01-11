@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS PRESTAMOS; 
+DROP TABLE IF EXISTS LIBROS;
+ DROP TABLE IF EXISTS USUARIOS;
 
 CREATE TABLE USUARIOS (
     id_user VARCHAR(50) PRIMARY KEY ,
@@ -11,7 +14,8 @@ CREATE TABLE USUARIOS (
 CREATE TABLE LIBROS (
     ISBN VARCHAR(13) PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
-    autor VARCHAR(100) NOT NULL
+    autor VARCHAR(100) NOT NULL , 
+    descripcion VARCHAR(100) NOT NULL
 );
 
 
@@ -35,12 +39,13 @@ INSERT INTO USUARIOS (id_user, nombre, ape1, ape2, rol) VALUES
 ('5', 'Luis', 'Martín', 'Díaz', '1');
 
 -- Insert 5 books
-INSERT INTO LIBROS (ISBN, titulo, autor) VALUES
-('9781234567890', 'El Quijote', 'Miguel de Cervantes'),
-('9781234567891', 'Cien Años de Soledad', 'Gabriel García Márquez'),
-('9781234567892', 'La Sombra del Viento', 'Carlos Ruiz Zafón'),
-('9781234567893', 'Donde los Árboles Cantan', 'Laura Gallego'),
-('9781234567894', 'La Casa de los Espíritus', 'Isabel Allende');
+INSERT INTO LIBROS (ISBN, titulo, autor, descripcion) VALUES
+('9781234567890', 'El Quijote', 'Miguel de Cervantes', 'Una de las obras más importantes de la literatura española, narra las aventuras del ingenioso hidalgo Don Quijote de la Mancha y su fiel escudero Sancho Panza.'),
+('9781234567891', 'Cien Años de Soledad', 'Gabriel García Márquez', 'Una novela emblemática del realismo mágico que cuenta la historia de la familia Buendía a lo largo de varias generaciones en el pueblo ficticio de Macondo.'),
+('9781234567892', 'La Sombra del Viento', 'Carlos Ruiz Zafón', 'Un joven llamado Daniel descubre un libro misterioso en el Cementerio de los Libros Olvidados, lo que desencadena una serie de eventos que revelan secretos oscuros del pasado.'),
+('9781234567893', 'Donde los Árboles Cantan', 'Laura Gallego', 'Una novela de fantasía que sigue la historia de Viana, una joven noble que se embarca en una aventura para salvar su reino y descubrir el misterio de los árboles que cantan.'),
+('9781234567894', 'La Casa de los Espíritus', 'Isabel Allende', 'Una saga familiar que mezcla elementos de realismo mágico y política, narrando la vida de la familia Trueba a lo largo de varias generaciones en un país sudamericano ficticio.');
+
 
 -- Insert 10 loans
 INSERT INTO PRESTAMOS (id_user, ISBN, fecha_desde, fecha_hasta) VALUES

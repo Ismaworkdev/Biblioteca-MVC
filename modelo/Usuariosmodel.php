@@ -56,7 +56,7 @@ class UsuariosModel
                     $new_Id = $usuarioregister->getId();
                     $Ape1 = $usuarioregister->getApe1();
                     $Ape2 = $usuarioregister->getApe2();
-                    $Rol = $usuarioregister->getId();
+                    $Rol = $usuarioregister->getRol();
 
 
                     $stmt = $this->db->prepare("INSERT INTO USUARIOS (id_user, nombre, ape1, ape2, rol) VALUES
