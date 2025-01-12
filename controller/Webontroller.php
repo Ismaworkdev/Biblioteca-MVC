@@ -2,9 +2,10 @@
 $vacio = null;
 $incorrecto = null;
 $usuexiste = null;
-
+session_start();
 require_once './modelo/Usuariosmodel.php';
 
+require_once './modelo/librosmodel.php';
 class WebController
 {
 
@@ -24,6 +25,10 @@ class WebController
 
                     $model = new UsuariosModel();
                     $incorrecto =  $model->verificarusuario($usuario);
+                    if (!$model->verificarusuario($usuario)) {
+                        $_SESSION['usuario'] = $usuario;
+                        header('Location: index.php?action=vistauser');
+                    }
                 } else {
                     $vacio = true;
                 }
@@ -31,6 +36,9 @@ class WebController
         }
         require './vista/iniciosesion.php';
     }
+
+
+
 
     function register()
     {
@@ -52,6 +60,33 @@ class WebController
             require './vista/registrarse.php';
         }
     }
+
+    function Imprimirlibros()
+    {
+        $model = new librosmodel();
+        $model->imprimirlibrosdisponibles();
+    }
+
+
+
+
+    function detalleslibro()
+    {
+        if (isset($_GET['isbn'])) {
+            $isbn = $_GET['isbn'];
+            $modelibros = new librosmodel();
+            $modelibros->imprimirdetalles($isbn);
+        }
+    }
+
+
+function addbook()  {
+    
+}
+
+    function deletebook() {}
+
+    function editbook() {}
 
     function mostrarerrores()
     {

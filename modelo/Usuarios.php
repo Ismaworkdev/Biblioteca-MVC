@@ -35,6 +35,7 @@ class Usuarios
 
         return $this;
     }
+    
 
     /**
      * Get the value of ape1

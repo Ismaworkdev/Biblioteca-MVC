@@ -25,6 +25,46 @@ class Router
                 case 'register':
                     $controller->register();
                     break;
+                case 'vistauser':
+                    include './vista/botones.php';
+                    include './vista/listalibros.php';
+                    break;
+                case 'detalleslibro':
+
+                    include './vista/detalleslibro.php';
+
+                    break;
+
+                case 'agregar';
+
+                    include './vista/agregar.php';
+
+                    break;
+                case 'eliminar';
+
+                    include './vista/eliminar.php';
+
+                    break;
+                case 'editar';
+
+                    include './vista/editar.php';
+
+                    break;
+                case 'addbook';
+
+                    $controller->addbook();
+
+                    break;
+                case 'deletebook';
+
+                    $controller->deletebook();
+
+                    break;
+                case 'editbook';
+
+                    $controller->editbook();
+
+                    break;
                 default:
                     include './vista/notfound.php';
                     break;

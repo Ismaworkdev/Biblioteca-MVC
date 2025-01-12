@@ -596,7 +596,8 @@ body {
     main {
 
         /*seccion de registrarse.html*/
-        .seccionRegistrarse {
+        .seccionRegistrarse,
+        .seccionagregar {
 
             background-color: rgb(42, 42, 42);
             opacity: 0.008;
@@ -696,51 +697,50 @@ body {
 }
 
 
-/*ESTILOS ESCRITORIO Detalle */
-.mainDetalle {
 
-    .detalle {
-        padding-top: 50px;
-        background: linear-gradient(to right top, #6d6969a7, #6d6969a7), url("../assets/img/fondodetalle.jpg");
-        background-size: cover;
-        background-position: center;
-        height: 70vh;
 
-        .contenedorDetalle {
-            width: 75%;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            column-gap: 60px;
+.detalle {
+    padding: 50px;
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
 
-            img {
-                border-radius: 20px;
-            }
+    .contenedorDetalle {
+        padding: 100px;
+        display: flex;
+        width: 75%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 60px;
 
-            .textoDetalle {
-                h1 {
-                    font-size: 2.2rem;
-                    font-weight: 700;
-                }
-
-                h2 {
-                    margin-top: 20px;
-                }
-
-                .contenedorCreditos {
-                    margin-top: 20px;
-                    display: flex;
-                    justify-content: space-between;
-                }
-            }
+        img {
+            border-radius: 20px;
         }
 
+        .textoDetalle {
+            h1 {
+                font-size: 2.2rem;
+                font-weight: 700;
+            }
 
+            h2 {
+                margin-top: 20px;
+            }
 
+            .contenedorCreditos {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
     }
 
+
+
 }
+
 
 
 
@@ -754,4 +754,28 @@ hr {
 .error {
     font-size: larger;
     color: red;
+}
+
+.listsection {
+    width: 100%;
+    padding: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.butonsect {
+    padding: 50px;
+    color: #181419;
+    background-color: #5ea593;
+    border-radius: 10px;
+    list-style: none;
+    font-size: larger;
+    font-weight: 900;
+}
+
+.butonsect:hover {
+    background-color: #52717a;
+
+    text-decoration: none;
 }

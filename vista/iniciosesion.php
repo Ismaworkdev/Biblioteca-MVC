@@ -18,6 +18,7 @@ $controller = new WebController();
         <?php $controller->mostrarerrores() ?>
 
         <div class="div_button">
+
             <input class="boton" type="submit" name="submitlogin" value="Iniciar Sesión">
         </div>
 

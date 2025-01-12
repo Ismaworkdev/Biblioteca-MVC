@@ -14,6 +14,5 @@ include './vista/comun/cabezera.php';
 include './core/controladorFrontal.func.php';
 Router::Enrutamiento();
 
-// Incluir pie de página
-include './vista/listalibros.php';
+
 include './vista/comun/pie.php';
