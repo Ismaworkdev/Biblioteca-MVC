@@ -81,4 +81,90 @@ class librosmodel
             }
         }
     }
+
+    function  verificarlibro($ISBN)
+    {
+
+        if ($this->db) {
+            $Libroregistrado = new Libros($ISBN);
+            $Libro = $Libroregistrado->getISBN();
+            try {
+
+                $stmt = $this->db->prepare("SELECT * FROM Libros WHERE ISBN = :ISBN");
+                $stmt->bindParam(':ISBN', $Libro);
+                $stmt->execute();
+                if ($stmt->rowCount() > 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (\Throwable $th) {
+            }
+        }
+    }
+
+
+    function   añadirlibro($ISBN, $titulo, $Autor, $descripcion)
+    {
+
+
+
+
+        if ($this->db) {
+
+            if ($this->verificarlibro($ISBN)) {
+
+                try {
+
+
+                    $libroregistrado = new Libros($ISBN, $titulo, $Autor, $descripcion);
+
+                    $isbn = $libroregistrado->getISBN();
+                    $title = $libroregistrado->getTitulo();
+                    $autor = $libroregistrado->getAutor();
+                    $descrip = $libroregistrado->getDescripcion();
+
+
+                    $stmt = $this->db->prepare("INSERT INTO LIBROS (ISBN, titulo, autor, descripcion) VALUES
+                (:isbn, :tt, :au, :descri)");
+                    $stmt->bindParam(':isbn', $isbn);
+                    $stmt->bindParam(':tt', $title);
+                    $stmt->bindParam(':au', $autor);
+                    $stmt->bindParam(':descri', $descrip);
+
+                    $stmt->execute();
+
+                    return true;
+                } catch (\Throwable $th) {
+                    return false;
+                }
+            }
+        }
+    }
+
+
+    function libroeliminado($isbn)
+    {
+
+
+        if ($this->db) {
+
+            if ($this->verificarlibro($isbn)) {
+
+                try {
+                    $libroelimina = new Libros($isbn);
+
+                    $isbnN = $libroelimina->getISBN();
+                    $stmt = $this->db->prepare("DELETE  FROM LIBROS WHERE ISBN = :isbn");
+                    $stmt->bindParam(':isbn', $isbnN);
+
+                    $stmt->execute();
+                    print "hola";
+                    return true;
+                } catch (\Throwable $th) {
+                    return false;
+                }
+            }
+        }
+    }
 }

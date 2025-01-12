@@ -2,6 +2,9 @@
 $vacio = null;
 $incorrecto = null;
 $usuexiste = null;
+$libroexiste = null;
+$librocreado = null;
+$libroeliminado = null;
 session_start();
 require_once './modelo/Usuariosmodel.php';
 
@@ -67,9 +70,6 @@ class WebController
         $model->imprimirlibrosdisponibles();
     }
 
-
-
-
     function detalleslibro()
     {
         if (isset($_GET['isbn'])) {
@@ -80,11 +80,54 @@ class WebController
     }
 
 
-function addbook()  {
-    
-}
+    function addbook()
+    {
+        global $libroexiste;
+        global $vacio;
+        global  $librocreado;
+        if ($_SERVER['REQUEST_METHOD'] = 'POST') {
+            if ($_POST['submitagregar']) {
+                $ISBN = $_POST['ISBN'];
+                $titulo = $_POST['titulo'];
+                $Autor = $_POST['Autor'];
+                $descripcion = $_POST['descripcion'];
+                if (!empty($ISBN) && !empty($titulo) && !empty($Autor) && !empty($descripcion)) {
+                    $modelibro = new librosmodel();
+                    $libroexiste =   $modelibro->verificarlibro($ISBN);
 
-    function deletebook() {}
+                    $vacio = false;
+                    $librocreado =   $modelibro->añadirlibro($ISBN, $titulo, $Autor, $descripcion);
+                } else {
+                    $vacio = true;
+                }
+            }
+        }
+        require './vista/agregar.php';
+    }
+
+    function deletebook()
+    {
+
+
+        global $libroexiste;
+        global $vacio;
+        global  $libroeliminado;
+        if ($_SERVER['REQUEST_METHOD'] = 'POST') {
+            if ($_POST['submitISBNeliminar']) {
+                $isbn = $_POST['ISBNeliminar'];
+                if (!empty($isbn)) {
+                    $vacio = false;
+                    $modelibro = new librosmodel();
+
+
+                    $libroeliminado =    $modelibro->libroeliminado($isbn);
+                } else {
+                    $vacio = true;
+                }
+            }
+        }
+        require './vista/eliminar.php';
+    }
 
     function editbook() {}
 
@@ -93,6 +136,7 @@ function addbook()  {
         global $vacio;
         global $incorrecto;
         global $execute;
+        global $libroexiste;
         if ($incorrecto !== null) {
             if ($incorrecto == false) {
                 print "<span class='error'>  </span>";
@@ -116,13 +160,24 @@ function addbook()  {
                 print "<span class='error'></span>";
             }
         }
+
+
+        if ($libroexiste !== null) {
+            if (!$libroexiste) {
+                print "<span class='error'> Libro existente .</span>";
+            } else {
+                print "<span class='error'></span>";
+            }
+        }
     }
 
     function alertacambio()
     {
         global $usuexiste;
+        global $librocreado;
+        global $libroeliminado;
         if ($usuexiste !== null) {
-            if ($usuexiste == false) {
+            if ($usuexiste == false || $librocreado == false || $libroeliminado == false) {
                 print ' <script>  </script> ';
             } else {
                 print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';
