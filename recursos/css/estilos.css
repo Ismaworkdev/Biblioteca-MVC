@@ -779,3 +779,17 @@ hr {
 
     text-decoration: none;
 }
+
+.botonreservar {
+    margin-top: 10px;
+    background-color: #354742;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 900;
+    
+}
+
+
+.botonreservar:hover {
+    text-decoration: none;
+}

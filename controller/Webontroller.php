@@ -5,6 +5,10 @@ $usuexiste = null;
 $libroexiste = null;
 $librocreado = null;
 $libroeliminado = null;
+$noexiste = null;
+$cambios = null;
+$actualizado = null;
+$inexistente = null;
 session_start();
 require_once './modelo/Usuariosmodel.php';
 
@@ -96,7 +100,10 @@ class WebController
                     $libroexiste =   $modelibro->verificarlibro($ISBN);
 
                     $vacio = false;
+
+
                     $librocreado =   $modelibro->añadirlibro($ISBN, $titulo, $Autor, $descripcion);
+                    print $librocreado;
                 } else {
                     $vacio = true;
                 }
@@ -109,7 +116,7 @@ class WebController
     {
 
 
-        global $libroexiste;
+        global $inexistente;
         global $vacio;
         global  $libroeliminado;
         if ($_SERVER['REQUEST_METHOD'] = 'POST') {
@@ -119,8 +126,10 @@ class WebController
                     $vacio = false;
                     $modelibro = new librosmodel();
 
-
-                    $libroeliminado =    $modelibro->libroeliminado($isbn);
+                    $inexistente =   $modelibro->verificarlibro($isbn);
+                    if (!$inexistente) {
+                        $libroeliminado =    $modelibro->libroeliminado($isbn);
+                    }
                 } else {
                     $vacio = true;
                 }
@@ -129,7 +138,44 @@ class WebController
         require './vista/eliminar.php';
     }
 
-    function editbook() {}
+    function editbook()
+    {
+        global $vacio;
+        global $noexiste;
+        global $cambios;
+        global $actualizado;
+        if ($_SERVER['REQUEST_METHOD'] = 'POST') {
+            if ($_POST['submiteditbook']) {
+                $isbn = $_POST['oldISBN'];
+                if (!empty($isbn)) {
+
+                    $modelibro = new librosmodel();
+                    $noexiste =   $modelibro->verificarlibro($isbn);
+                    if (!$noexiste) {
+                        $newISBN = isset($_POST['newISBN']) ? $_POST['newISBN'] : '';
+                        $newtitle =  isset($_POST['newtitle']) ? $_POST['newtitle'] : '';
+                        $newautor =   isset($_POST['newautor']) ? $_POST['newautor'] : '';
+                        $newDescripcion =    isset($_POST['newDescripcion']) ? $_POST['newDescripcion'] : '';
+                        if (!empty($newISBN) && !empty($newtitle) && !empty($newautor) && !empty($newDescripcion)) {
+
+                            $cambios = true;
+                        } else {
+
+                            $cambios = false;
+                            $modelibro = new librosmodel();
+                            $actualizado =   $modelibro->editarlibro($isbn, $newISBN, $newtitle, $newautor, $newDescripcion);
+                            if ($actualizado) {
+                                $cambios = true;
+                            }
+                        }
+                    }
+                } else {
+                    $vacio = true;
+                }
+            }
+        }
+        require './vista/editar.php';
+    }
 
     function mostrarerrores()
     {
@@ -137,6 +183,9 @@ class WebController
         global $incorrecto;
         global $execute;
         global $libroexiste;
+        global $noexiste;
+        global $cambios;
+        global $inexistente;
         if ($incorrecto !== null) {
             if ($incorrecto == false) {
                 print "<span class='error'>  </span>";
@@ -147,7 +196,7 @@ class WebController
 
         if ($vacio !== null) {
             if ($vacio) {
-                print "<span class='error'> Rellene todos lo campos .</span>";
+                print "<span class='error'> Rellene todos lo campos obligatorios.</span>";
             } else {
                 print "<span class='error'></span>";
             }
@@ -169,6 +218,31 @@ class WebController
                 print "<span class='error'></span>";
             }
         }
+
+        if ($inexistente !== null) {
+            if ($inexistente) {
+                print "<span class='error'> Libro inexistente .</span>";
+            } else {
+                print "<span class='error'></span>";
+            }
+        }
+
+
+        if ($noexiste !== null) {
+            if ($noexiste) {
+                print "<span class='error'> Libro inexistente .</span>";
+            } else {
+                print "<span class='error'></span>";
+            }
+        }
+
+        if ($cambios !== null) {
+            if (!$cambios) {
+                print "<span class='error'>No has hecho ningun cambio . </span>";
+            } else {
+                print "<span class='error'> </span>";
+            }
+        }
     }
 
     function alertacambio()
@@ -176,8 +250,34 @@ class WebController
         global $usuexiste;
         global $librocreado;
         global $libroeliminado;
+        global $actualizado;
         if ($usuexiste !== null) {
-            if ($usuexiste == false || $librocreado == false || $libroeliminado == false) {
+            if ($usuexiste == false) {
+                print ' <script>  </script> ';
+            } else {
+                print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';
+            }
+        }
+
+        if ($libroeliminado !== null) {
+            if ($libroeliminado == false) {
+                print ' <script>  </script> ';
+            } else {
+                print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';
+            }
+        }
+
+
+        if ($librocreado !== null) {
+            if ($librocreado == false) {
+                print ' <script>  </script> ';
+            } else {
+                print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';
+            }
+        }
+
+        if ($actualizado !== null) {
+            if ($actualizado == false) {
                 print ' <script>  </script> ';
             } else {
                 print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';

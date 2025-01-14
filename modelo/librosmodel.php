@@ -73,6 +73,7 @@ class librosmodel
                  <p> ' . $row['descripcion'] . '</p>
                                   <h3>ISBN : </h3>
                  <p> ' . $row['ISBN'] . '</p>
+        <a class="botonreservar" href="./index.php?action=reservar">Reservar</a>
 
 
              </div>
@@ -112,32 +113,31 @@ class librosmodel
 
         if ($this->db) {
 
-            if ($this->verificarlibro($ISBN)) {
-
-                try {
 
 
-                    $libroregistrado = new Libros($ISBN, $titulo, $Autor, $descripcion);
-
-                    $isbn = $libroregistrado->getISBN();
-                    $title = $libroregistrado->getTitulo();
-                    $autor = $libroregistrado->getAutor();
-                    $descrip = $libroregistrado->getDescripcion();
+            try {
 
 
-                    $stmt = $this->db->prepare("INSERT INTO LIBROS (ISBN, titulo, autor, descripcion) VALUES
-                (:isbn, :tt, :au, :descri)");
-                    $stmt->bindParam(':isbn', $isbn);
-                    $stmt->bindParam(':tt', $title);
-                    $stmt->bindParam(':au', $autor);
-                    $stmt->bindParam(':descri', $descrip);
+                $libroregistrado = new Libros($ISBN, $titulo, $Autor, $descripcion);
 
-                    $stmt->execute();
+                $isbn = $libroregistrado->getISBN();
+                $title = $libroregistrado->getTitulo();
+                $autor = $libroregistrado->getAutor();
+                $descrip = $libroregistrado->getDescripcion();
 
-                    return true;
-                } catch (\Throwable $th) {
-                    return false;
-                }
+
+                $stmt = $this->db->prepare("INSERT INTO libros (ISBN, titulo, autor, descripcion) VALUES
+                    (:isbn, :tt, :au, :descri)");
+                $stmt->bindParam(':isbn', $isbn);
+                $stmt->bindParam(':tt', $title);
+                $stmt->bindParam(':au', $autor);
+                $stmt->bindParam(':descri', $descrip);
+
+                $stmt->execute();
+
+                return true;
+            } catch (\Throwable $th) {
+                return false;
             }
         }
     }
@@ -149,7 +149,7 @@ class librosmodel
 
         if ($this->db) {
 
-            if ($this->verificarlibro($isbn)) {
+            if (!$this->verificarlibro($isbn)) {
 
                 try {
                     $libroelimina = new Libros($isbn);
@@ -159,8 +159,55 @@ class librosmodel
                     $stmt->bindParam(':isbn', $isbnN);
 
                     $stmt->execute();
-                    print "hola";
+
                     return true;
+                } catch (\Throwable $th) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    function editarlibro($oldisbn, $newisbn, $title, $autor, $descrip)
+    {
+        if ($this->db) {
+            if (!$this->verificarlibro($oldisbn)) {
+                try {
+                    // Crear un array para los campos a actualizar
+                    $updates = [];
+                    $params = [];
+
+                    // Agregar campos no vacíos al array de actualizaciones
+                    if ($newisbn !== '') {
+                        $updates[] = "ISBN = :newisbn";
+                        $params[':newisbn'] = $newisbn;
+                    }
+                    if ($title !== '') {
+                        $updates[] = "titulo = :title";
+                        $params[':title'] = $title;
+                    }
+                    if ($autor !== '') {
+                        $updates[] = "autor = :autor";
+                        $params[':autor'] = $autor;
+                    }
+                    if ($descrip !== '') {
+                        $updates[] = "descripcion = :descrip";
+                        $params[':descrip'] = $descrip;
+                    }
+
+                    // Verificar que hay campos para actualizar
+                    if (!empty($updates)) {
+
+                        $updateQuery = implode(", ", $updates);
+                        $sql = "UPDATE LIBROS SET $updateQuery WHERE ISBN = :oldisbn";
+                        $params[':oldisbn'] = $oldisbn;
+                        $stmt = $this->db->prepare($sql);
+                        $stmt->execute($params);
+                        print "si";
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } catch (\Throwable $th) {
                     return false;
                 }
