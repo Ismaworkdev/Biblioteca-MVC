@@ -9,10 +9,12 @@ $noexiste = null;
 $cambios = null;
 $actualizado = null;
 $inexistente = null;
+$reservado = null;
 session_start();
 require_once './modelo/Usuariosmodel.php';
-
+require_once './modelo/reservamodel.php';
 require_once './modelo/librosmodel.php';
+
 class WebController
 {
 
@@ -83,7 +85,18 @@ class WebController
         }
     }
 
+    function comprobaruser()
+    {
+        if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+            $user = $_SESSION['usuario'];
+            if ($user == "admin") {
+                include './vista/paneladmin.php';
+            } else {
 
+                include './vista/paneluser.php';
+            }
+        }
+    }
     function addbook()
     {
         global $libroexiste;
@@ -174,11 +187,39 @@ class WebController
                 }
             }
         }
+
         require './vista/editar.php';
+    }
+    function reservarlibro()
+    {
+        global $reservado;
+        global $yaesta;
+        if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario']) && isset($_GET['isbnreserva']) && !empty($_GET['isbnreserva'])) {
+            $isbn = $_GET['isbnreserva'];
+            $user = $_SESSION['usuario'];
+            $modelreserva = new reservamodel();
+            $reservado =   $modelreserva->reservar($isbn, $user);
+            // $this->mostrarerrores();
+            //s$this->alertacambio();
+        }
+        $modelibros = new librosmodel();
+        $modelibros->imprimirdetalles($isbn);
+        require './vista/detalleslibro.php';
+    }
+
+
+    function   Imprimireservas()
+    {
+        if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+            $user = $_SESSION['usuario'];
+            $modelreserva = new reservamodel();
+            $modelreserva->imprimireservasuser($user);
+        }
     }
 
     function mostrarerrores()
     {
+
         global $vacio;
         global $incorrecto;
         global $execute;
@@ -186,11 +227,22 @@ class WebController
         global $noexiste;
         global $cambios;
         global $inexistente;
+        global $yaesta;
+
         if ($incorrecto !== null) {
             if ($incorrecto == false) {
                 print "<span class='error'>  </span>";
             } else {
                 print "<span class='error'>  Usuario inexistente . </span>";
+            }
+        }
+
+
+        if ($yaesta !== null) {
+            if ($yaesta == false) {
+                print "<span class='error'>  </span>";
+            } else {
+                print "<span class='error'> El usuario ya tiene este libro reservado . </span>";
             }
         }
 
@@ -247,6 +299,7 @@ class WebController
 
     function alertacambio()
     {
+        global $reservado;
         global $usuexiste;
         global $librocreado;
         global $libroeliminado;
@@ -278,6 +331,14 @@ class WebController
 
         if ($actualizado !== null) {
             if ($actualizado == false) {
+                print ' <script>  </script> ';
+            } else {
+                print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';
+            }
+        }
+        if ($reservado !== null) {
+
+            if ($reservado == false) {
                 print ' <script>  </script> ';
             } else {
                 print ' <script>  alert("Los cambios se han guardado correctamente .");  </script> ';

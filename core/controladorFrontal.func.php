@@ -26,27 +26,28 @@ class Router
                     $controller->register();
                     break;
                 case 'vistauser':
-                    include './vista/botones.php';
+                    $controller->comprobaruser();
                     include './vista/listalibros.php';
+                    include './vista/librosreservados.php';
                     break;
                 case 'detalleslibro':
-
+                    $controller->comprobaruser();
                     include './vista/detalleslibro.php';
 
                     break;
 
                 case 'agregar';
-
+                    $controller->comprobaruser();
                     include './vista/agregar.php';
 
                     break;
                 case 'eliminar';
-
+                    $controller->comprobaruser();
                     include './vista/eliminar.php';
 
                     break;
                 case 'editar';
-
+                    $controller->comprobaruser();
                     include './vista/editar.php';
 
                     break;
@@ -63,6 +64,12 @@ class Router
                 case 'editbook';
 
                     $controller->editbook();
+
+                    break;
+                case 'reservar';
+                    $controller->comprobaruser();
+                    $controller->reservarlibro();
+
 
                     break;
                 default:

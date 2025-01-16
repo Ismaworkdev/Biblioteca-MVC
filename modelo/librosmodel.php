@@ -47,7 +47,7 @@ class librosmodel
     }
 
 
-    function imprimirdetalles($isbn)
+    public function imprimirdetalles($isbn)
     {
         if ($this->db) {
 
@@ -73,7 +73,7 @@ class librosmodel
                  <p> ' . $row['descripcion'] . '</p>
                                   <h3>ISBN : </h3>
                  <p> ' . $row['ISBN'] . '</p>
-        <a class="botonreservar" href="./index.php?action=reservar">Reservar</a>
+        <a class="botonreservar" href="./index.php?action=reservar&isbnreserva=' . $row['ISBN'] . '">Reservar</a>
 
 
              </div>
@@ -83,7 +83,7 @@ class librosmodel
         }
     }
 
-    function  verificarlibro($ISBN)
+    public  function  verificarlibro($ISBN)
     {
 
         if ($this->db) {
@@ -105,7 +105,7 @@ class librosmodel
     }
 
 
-    function   añadirlibro($ISBN, $titulo, $Autor, $descripcion)
+    public   function   añadirlibro($ISBN, $titulo, $Autor, $descripcion)
     {
 
 
@@ -143,7 +143,7 @@ class librosmodel
     }
 
 
-    function libroeliminado($isbn)
+    public   function libroeliminado($isbn)
     {
 
 
@@ -168,7 +168,7 @@ class librosmodel
         }
     }
 
-    function editarlibro($oldisbn, $newisbn, $title, $autor, $descrip)
+    public function editarlibro($oldisbn, $newisbn, $title, $autor, $descrip)
     {
         if ($this->db) {
             if (!$this->verificarlibro($oldisbn)) {
