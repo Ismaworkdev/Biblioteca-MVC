@@ -5,7 +5,7 @@
 require_once './config/global.php';
 
 // Incluir controladores principales
-require_once './core/ControladorBase.php';
+
 require_once './core/Conexion.php';
 
 // Incluir cabecera
