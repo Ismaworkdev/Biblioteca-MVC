@@ -1,6 +1,8 @@
 <?php
+
 class Router
 {
+
     public static function Enrutamiento()
     {
 
@@ -8,8 +10,10 @@ class Router
             $action = $_GET['action'];
             require_once './controller/Webontroller.php';
             $controller = new WebController();
+
             switch ($action) {
                 case 'registrarse':
+
                     include './vista/registrarse.php';
                     break;
 
@@ -26,9 +30,11 @@ class Router
                     $controller->register();
                     break;
                 case 'vistauser':
+
                     $controller->comprobaruser();
                     include './vista/listalibros.php';
                     include './vista/librosreservados.php';
+
                     break;
                 case 'detalleslibro':
                     $controller->comprobaruser();

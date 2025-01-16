@@ -1,20 +1,30 @@
  <?php
-    require_once './controller/Webontroller.php';
+    if (!empty($_SESSION)) {
+        require_once './controller/Webontroller.php';
 
-    $controller = new WebController();
+        $controller = new WebController();
+
+
+
+
     ?>
 
- <section id="Disponibles" class="librosDisponibles">
-     <h3 class="tituloSection">Libros Disponibles</h3>
-     <div class="libros">
+     <section id="Disponibles" class="librosDisponibles">
+         <h3 class="tituloSection">Libros Disponibles</h3>
+         <div class="libros">
 
-         <?php
-            $controller->Imprimirlibros();
+             <?php
+                $controller->Imprimirlibros();
 
-            ?>
+                ?>
 
-     </div>
+         </div>
 
- </section>
- <br>
- <br>
+     </section>
+     <br>
+     <br>
+ <?php
+    } else {
+        print "";
+    };
+    ?>
