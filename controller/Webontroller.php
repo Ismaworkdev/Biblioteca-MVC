@@ -165,19 +165,16 @@ class WebController
                     $modelibro = new librosmodel();
                     $noexiste =   $modelibro->verificarlibro($isbn);
                     if (!$noexiste) {
-                        $newISBN = isset($_POST['newISBN']) ? $_POST['newISBN'] : '';
+
                         $newtitle =  isset($_POST['newtitle']) ? $_POST['newtitle'] : '';
                         $newautor =   isset($_POST['newautor']) ? $_POST['newautor'] : '';
                         $newDescripcion =    isset($_POST['newDescripcion']) ? $_POST['newDescripcion'] : '';
-                        if (!empty($newISBN) && !empty($newtitle) && !empty($newautor) && !empty($newDescripcion)) {
-
-                            $cambios = true;
-                        } else {
-
-                            $cambios = false;
-                            $modelibro = new librosmodel();
-                            $actualizado =   $modelibro->editarlibro($isbn, $newISBN, $newtitle, $newautor, $newDescripcion);
-                            if ($actualizado) {
+                        if (isset($newtitle) && isset($newautor) && isset($newDescripcion)) {
+                            if (empty($newtitle) && empty($newautor) && empty($newDescripcion)) {
+                                $cambios = false;
+                            } else {
+                                $modelibro = new librosmodel();
+                                $actualizado =   $modelibro->editarlibro($isbn, $newtitle, $newautor, $newDescripcion);
                                 $cambios = true;
                             }
                         }
@@ -290,7 +287,7 @@ class WebController
 
         if ($cambios !== null) {
             if (!$cambios) {
-                print "<span class='error'>No has hecho ningun cambio . </span>";
+                print "<span class='error'> No has hecho ningun cambio .</span>";
             } else {
                 print "<span class='error'> </span>";
             }

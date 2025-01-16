@@ -11,9 +11,7 @@ $controller = new WebController();
         <div>
             <input type="text" placeholder="ISBN (campo obligatorio)" name="oldISBN" value="<?php echo isset($_POST['oldISBN']) ? $_POST['oldISBN'] : ''; ?>">
         </div>
-        <div>
-            <input type="text" placeholder=" Nuevo ISBN  (campo opcional)" name="newISBN" value="<?php echo isset($_POST['newISBN']) ? $_POST['newISBN'] : ''; ?>">
-        </div>
+
         <div>
             <input type="text" placeholder="Nuevo titulo (campo opcional)" name="newtitle" value="<?php echo isset($_POST['newtitle']) ? $_POST['newtitle'] : ''; ?>">
         </div>

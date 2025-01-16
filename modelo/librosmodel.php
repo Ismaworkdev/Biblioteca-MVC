@@ -155,60 +155,71 @@ class librosmodel
                     $libroelimina = new Libros($isbn);
 
                     $isbnN = $libroelimina->getISBN();
+
+
+                    //prestamos
+
+                    $stmt = $this->db->prepare("DELETE  FROM PRESTAMOS WHERE ISBN = :isbn");
+
+                    $stmt->bindParam(':isbn', $isbnN);
+
+                    $stmt->execute();
+
+                    //libros
                     $stmt = $this->db->prepare("DELETE  FROM LIBROS WHERE ISBN = :isbn");
+
                     $stmt->bindParam(':isbn', $isbnN);
 
                     $stmt->execute();
 
                     return true;
                 } catch (\Throwable $th) {
+                    print $th;
                     return false;
                 }
             }
         }
     }
 
-    public function editarlibro($oldisbn, $newisbn, $title, $autor, $descrip)
+    public function editarlibro($oldisbn, $title, $autor, $descrip)
     {
         if ($this->db) {
             if (!$this->verificarlibro($oldisbn)) {
                 try {
                     // Crear un array para los campos a actualizar
-                    $updates = [];
-                    $params = [];
+                    $cadena = [];
+                    $parametros = [];
 
                     // Agregar campos no vacíos al array de actualizaciones
-                    if ($newisbn !== '') {
-                        $updates[] = "ISBN = :newisbn";
-                        $params[':newisbn'] = $newisbn;
-                    }
+
                     if ($title !== '') {
-                        $updates[] = "titulo = :title";
-                        $params[':title'] = $title;
+                        $cadena[] = "titulo = :title";
+                        $parametros[':title'] = $title;
                     }
                     if ($autor !== '') {
-                        $updates[] = "autor = :autor";
-                        $params[':autor'] = $autor;
+                        $cadena[] = "autor = :autor";
+                        $parametros[':autor'] = $autor;
                     }
                     if ($descrip !== '') {
-                        $updates[] = "descripcion = :descrip";
-                        $params[':descrip'] = $descrip;
+                        $cadena[] = "descripcion = :descrip";
+                        $parametros[':descrip'] = $descrip;
                     }
 
                     // Verificar que hay campos para actualizar
-                    if (!empty($updates)) {
+                    if (!empty($cadena)) {
 
-                        $updateQuery = implode(", ", $updates);
-                        $sql = "UPDATE LIBROS SET $updateQuery WHERE ISBN = :oldisbn";
-                        $params[':oldisbn'] = $oldisbn;
+                        $request = implode(", ", $cadena);
+                        $sql = "UPDATE LIBROS SET $request WHERE ISBN = :oldisbn";
+                        $parametros[':oldisbn'] = $oldisbn;
                         $stmt = $this->db->prepare($sql);
-                        $stmt->execute($params);
-                        print "si";
+                        $stmt->execute($parametros);
+
                         return true;
                     } else {
                         return false;
                     }
                 } catch (\Throwable $th) {
+                    print $th;
                     return false;
                 }
             }

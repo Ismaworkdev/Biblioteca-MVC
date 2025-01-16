@@ -3,7 +3,7 @@ class Router
 {
     public static function Enrutamiento()
     {
-        // Verificar si hay un parámetro "action" en la URL
+
         if (isset($_GET['action'])) {
             $action = $_GET['action'];
             require_once './controller/Webontroller.php';
@@ -52,17 +52,17 @@ class Router
 
                     break;
                 case 'addbook';
-
+                    $controller->comprobaruser();
                     $controller->addbook();
 
                     break;
                 case 'deletebook';
-
+                    $controller->comprobaruser();
                     $controller->deletebook();
 
                     break;
                 case 'editbook';
-
+                    $controller->comprobaruser();
                     $controller->editbook();
 
                     break;
@@ -72,12 +72,17 @@ class Router
 
 
                     break;
+                case 'logout';
+                    include './vista/logout.php';
+
+
+                    break;
                 default:
                     include './vista/notfound.php';
                     break;
             }
         } else {
-            // Si no se pasa ningún "action", cargar la sección principal
+
             include './vista/sectionindex.php';
         }
     }

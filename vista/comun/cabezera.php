@@ -29,6 +29,8 @@
             <ul class="listaNav">
                 <li class="listaItem"><a class="linkNav iniciarSesion" href="./index.php?action=registrarse">Registrarse</a></li>
                 <li class="listaItem"><a class="linkNav iniciarSesion" href="./index.php?action=iniciosesion">Iniciar Sesión</a></li>
+                <li class="listaItem"><a class="linkNav iniciarSesion" href="./index.php?action=logout">Cerrar session</a></li>
+
             </ul>
         </nav>
     </header>
